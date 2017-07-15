@@ -109,6 +109,9 @@
         float: right;
         padding-top: 1em;
       }
+      .remark-code-line {
+        word-wrap: break-word;
+    }
     </style>
   </head>
   <body>
@@ -116,7 +119,7 @@
 
 class: center, middle, inverse
 
-# Code Example for Tracing the Language Interpreter Loop
+# Code Example for Applying Tracing JIT to the Interpreter
 
 ---
 
@@ -124,14 +127,15 @@ class: center, middle, inverse
 
 --
 
+.pull-left[
+
+A interpreter
+
 ```python
 def interpret(bytecode, a):
-    regs = [0] * 256 # create a list of 256 ints initialized to 0
-    pc = 0 # program counter
-    ## opcode dispatch: the chain of if...elif is turned into
-    ## a switch statement by one of PyPy’s optimizations
+    regs = [0] * 256
+    pc = 0
     while True:
-        # opcode is represented by an integer value
         opcode = ord(bytecode[pc])
         pc += 1
         if opcode == JUMP_IF_A:
@@ -150,16 +154,21 @@ def interpret(bytecode, a):
         elif opcode == RETURN_A:
             return a
 ```
-
----
-
-## Trace when executing the `DECR_A` opcode
+]
 
 --
 
+.pull-right[
+Trace when executing the `DECR_A` opcode
 ```python
-
+loop_start(a0, regs0, bytecode0, pc0)
+opcode0 = strgetitem(bytecode0, pc0)
+pc1 = int_add(pc0, Const(1))
+guard_value(opcode0, Const(7))
+a1 = int_sub(a0, Const(1))
+jump(a1, regs0, bytecode0, pc1)
 ```
+]
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
