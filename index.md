@@ -93,29 +93,7 @@ class: center, middle, inverse
 # Tracing JIT Compiler
 ---
 
-# Background: Problem of compiler optimization
-
-## Pareto principle (_80-20 rule_)
-
-- 20% of the program will account for the 80% program
-
-  - i.e.) only generate machine code for the hot code paths of commonly executed loop
-
---
-
-## Fast Path principle
-
-it is usually possible to split expensive operations into a _fast path_ and a _slow path_
-
-- fast path
-  - need to be highly optimized
-- slow path
-  - not need to optimization
-
----
 # Background: Assumptions of Tracing JIT Compiler
-
-Receiving the above contents...
 
 --
 ## Assumptions
