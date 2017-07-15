@@ -7,13 +7,15 @@
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      html { font-size: 100%; }
+      p { font-size: 24px; }
       body { font-family: 'Droid Serif'; }
       h1, h2, h3 {
         font-family: 'Yanone Kaffeesatz';
         font-weight: 400;
         margin-bottom: 0;
       }
-      .remark-slide-content h1 { font-size: 2.5em; }
+      .remark-slide-content h1 { font-size: 3em; }
       .remark-slide-content h2 { font-size: 2em; }
       .remark-slide-content h3 { font-size: 1.6em; }
       .footnote {
@@ -123,7 +125,7 @@ class: center, middle, inverse
 
 ---
 
-## A Interpreter implementation
+# A Interpreter implementation
 
 --
 
@@ -169,6 +171,120 @@ a1 = int_sub(a0, Const(1))
 jump(a1, regs0, bytecode0, pc1)
 ```
 ]
+
+---
+# Evaluation of previous example
+
+--
+
+## Problem:
+
+.center[useful _only when_ executing a long series of `DECR_A` opcodes.]
+
+--
+
+## Solution:
+
+.center[do not trace the single opcode, but a **series of several opcodes**.]
+
+
+---
+
+# Improved Implementation
+
+--
+
+```python
+tlrjitdriver = JitDriver(greens = [’pc’, ’bytecode’],
+                         reds   = [’a’, ’regs’])
+
+def interpret(bytecode, a):
+    regs = [0] * 256
+    pc = 0
+    while True:
+        tlrjitdriver.jit_merge_point(
+            bytecode=bytecode, pc=pc,
+            a=a, regs=regs)
+        opcode = ord(bytecode[pc])
+        pc += 1
+        if opcode == JUMP_IF_A:
+            target = ord(bytecode[pc])
+            pc += 1
+            if a:
+                if target < pc:
+                    tlrjitdriver.can_enter_jit(
+                        bytecode=bytecode, pc=target,
+                        a=a, regs=regs)
+                pc = target
+        elif opcode == MOV_A_R:
+            ... # rest unmodified
+```
+
+---
+
+# Improved Implementation
+
+```python
+*tlrjitdriver = JitDriver(greens = [’pc’, ’bytecode’],
+*                        reds   = [’a’, ’regs’])
+
+def interpret(bytecode, a):
+    regs = [0] * 256
+    pc = 0
+    while True:
+*       tlrjitdriver.jit_merge_point(
+*           bytecode=bytecode, pc=pc,
+*           a=a, regs=regs)
+        opcode = ord(bytecode[pc])
+        pc += 1
+        if opcode == JUMP_IF_A:
+            target = ord(bytecode[pc])
+            pc += 1
+            if a:
+                if target < pc:
+*                   tlrjitdriver.can_enter_jit(
+*                       bytecode=bytecode, pc=target,
+*                       a=a, regs=regs)
+                pc = target
+        elif opcode == MOV_A_R:
+            ... # rest unmodified
+```
+
+---
+
+# Improved point
+
+--
+
+## Adding hints
+
+- `JitDriver(greends = [...], reds = [...])`
+
+- `jit_merge_point`
+
+- `can_enter_jit`
+
+---
+
+# Hint: JitDriver
+
+--
+
+## greens:
+
+-  program counter of the language interpreter
+  - in that case: `bytecode` and `pc`
+
+--
+
+## reds:
+
+- all other variables that added to `JitDriver` as argument
+  - in that case: `a` and `regs`
+
+---
+
+# Hint: 
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
