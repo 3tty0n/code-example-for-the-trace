@@ -612,4 +612,6 @@ name: conclusion
 - PyGirl: a Gameboy emulator
 - and so on.
 
-they are written in RPython
+they are written in RPython*
+
+.footnote[.red.bold[*] I may talk about RPython in next seminar]
