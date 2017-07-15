@@ -1,10 +1,3 @@
-class: center, middle, inverse
-name: title
-
-# Code Example for the Trace
-
----
-
 # A Python Code and the Recorded Trace
 
 .pull-left[
@@ -362,3 +355,8 @@ def strange_sum(n):
 * jump(result1, n1)
 ```
 ]
+
+---
+class: center, middle, inverse
+
+# [Back](./index.html#29)
