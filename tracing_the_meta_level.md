@@ -615,3 +615,8 @@ name: conclusion
 they are written in RPython*
 
 .footnote[.red.bold[*] I may talk about RPython in next seminar]
+
+---
+class: center, middle, inverse
+
+# [My Future Work](./my_future_work.html)
