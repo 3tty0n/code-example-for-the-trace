@@ -459,9 +459,24 @@ RETURN_A
 
 - 以上の最適化技術を施すと、次のようなトレースを生成することが出来ます
 - 命令の列が以前より大幅に減りました。これによって命令の数が減るので、以前のものより実行速度が早くなると考えられます
-- このトレース、非常に元のバイトコードに似ていませんか？
+- このトレースは非常に元のバイトコードに、ユーザーのプログラムに似ていませんか？
 - これは偶然ではなく、最適化の過程で無駄な計算の枝葉を取っていったので、なるべくしてなったのです
 
+---
+class: middle, center
+
+# Tracing the Meta-Level:
+
+--
+not trace directly the user program,
+
+but we trace the interpreter while executing the user program
+
+
+???
+
+つまり、tracing the mta-level というのは、 user program を直接トレースするのではなく、
+interpreter が実行した user program をトレースするということなのです
 ---
 # Evaluation
 
