@@ -177,8 +177,9 @@ put at the beginning of bitecode dispatch loop.
 
 ## In order to
 
-- to trace not a single opcode, but a series of several opcodes.
--  JIT can detect the head of the bytecode dispatch loop.
+- trace not a single opcode, but a series of several opcodes.
+
+- JIT can detect the head of the bytecode dispatch loop.
 
 ---
 
@@ -193,6 +194,7 @@ needs to be called at the end of any instruction that __program counter__ to an 
 
 
 - to check for a __closing loop__
+
 - JIT can detect the backward jump
 
 --
@@ -203,11 +205,18 @@ needs to be called at the end of any instruction that __program counter__ to an 
 
 ---
 
-# Example for the improved interpreter
+# Example for the fixed interpreter
 
---
+---
 
-## Improved interpreter (repeated)
+.left-column[
+## Example for the fixed interpreter
+### - fixed interp.
+]
+
+.right-column[
+
+### Repeated
 
 ```python
 tlrjitdriver = JitDriver(greens = [’pc’, ’bytecode’],
@@ -235,13 +244,16 @@ def interpret(bytecode, a):
             ... # rest unmodified
 ```
 ]
-
 ---
 
-.pull-left[
+.left-column[
+## Example for the fixed interpreter
+### - fixed interp.
+### - input bytecode
+]
 
-### Input bytecode
-Compute the square of the accumulator
+.right-column[
+### Compute the square of the accumulator
 
 ```avrasm
 MOV_A_R     0   # i = a
@@ -264,11 +276,17 @@ RETURN_A
 ```
 ]
 
---
+---
 
-.pull-right[
+.left-column[
+## Example for the fixed interpreter
+### - fixed interp.
+### - input bytecode
+### - result
+]
 
-### result
+.right-column[
+### Example trace
 
 ```python
 loop_start(a0, regs0, bytecode0, pc0)
@@ -311,8 +329,268 @@ jump(a5, regs0, bytecode0, target0)
 
 ## What points to look at?
 
-- .large[remove operations]
-- .large[constant folding immutable values]
+- remove operations
+
+- constant folding immutable values
+
 ---
 
 # Remove operations
+
+--
+
+## Example
+
+
+```python
+loop_start(a0, regs0, bytecode0, pc0)
+# MOV_R_A 0
+*opcode0 = strgetitem(bytecode0, pc0)
+pc1 = int_add(pc0, Const(1))
+*guard_value(opcode0, Const(2))
+n1 = strgetitem(bytecode0, pc1)
+pc2 = int_add(pc1, Const(1))
+a1 = call(Const(<* fn list_getitem>), regs0, n1)
+```
+
+--
+
+## Insight
+
+
+- most of its operations are not actually doing any computaion
+
+	- i.e.) they manipulate the datastructure of the data structure of the language interpreter
+
+- they can be removed
+
+
+---
+
+
+# Constant folding immutable values
+
+--
+
+## Example
+
+
+```python
+loop_start(a0, regs0, bytecode0, pc0)
+# MOV_R_A 0
+opcode0 = strgetitem(bytecode0, pc0)
+*pc1 = int_add(pc0, Const(1))
+guard_value(opcode0, Const(2))
+*n1 = strgetitem(bytecode0, pc1)
+*pc2 = int_add(pc1, Const(1))
+*a1 = call(Const(<* fn list_getitem>), regs0, n1)
+```
+
+--
+
+## Insight
+
+
+- most of the operations are manipulating the bytecoce string and the program counter
+  - program counter (`int`): fixed value
+  - bytecode (`string`): immutable in RPython
+- they can be __constant-folded__
+
+---
+
+# Optimized Result
+
+--
+
+.semi-left[
+```python
+# MOV_R_A 0
+a1 = call(Const(<* fn list_getitem>), regs0, Const(0))
+# DECR_A
+a2 = int_sub(a1, Const(1))
+# MOV_A_R 0
+call(Const(<* fn list_setitem>), regs0, Const(0), a2)
+# MOV_R_A 2
+a3 = call(Const(<* fn list_getitem>), regs0, Const(2))
+# ADD_R_TO_A  1
+i0 = call(Const(<* fn list_getitem>), regs0, Const(1))
+a4 = int_add(a3, i0)
+# MOV_A_R 2
+call(Const(<* fn list_setitem>), regs0, Const(2), a4)
+# MOV_R_A 0
+a5 = call(Const(<* fn list_getitem>), regs0, Const(0))
+# JUMP_IF_A 4
+i1 = int_is_true(a5)
+guard_true(i1)
+jump(a5, regs0)
+```
+<!-- </code></pre> -->
+]
+
+--
+
+.semi-right[
+```avrasm
+MOV_A_R     0
+MOV_A_R     1
+
+# 4:
+MOV_R_A     0
+DECR_A
+
+MOV_A_R     0
+MOV_R_A     2
+ADD_R_TO_A  1
+MOV_A_R     2
+
+MOV_R_A     0
+JUMP_IF_A   4
+
+MOV_R_A     2
+RETURN_A
+```
+]
+
+--
+
+
+.center[Very similar to the original bytecode]
+
+???
+
+- 以上の最適化技術を施すと、次のようなトレースを生成することが出来ます
+- 命令の列が以前より大幅に減りました。これによって命令の数が減るので、以前のものより実行速度が早くなると考えられます
+- このトレース、非常に元のバイトコードに似ていませんか？
+- これは偶然ではなく、最適化の過程で無駄な計算の枝葉を取っていったので、なるべくしてなったのです
+
+---
+# Evaluation
+
+--
+
+## hardware
+- 1.4 GHz Pentium M processor
+- 1 GB RAM
+- Linux 2.6.27
+
+## Trying number
+- all benchmarks are repeated 50 times
+
+---
+
+.left-column[
+## Timings of the example interpreter
+]
+
+---
+
+.left-column[
+## Timings of the example interpreter
+### - target
+]
+
+.right-column[
+1. translated to C .red[without] including a JIT compiler
+
+1. tracing JIT is .green[enabled], but .red[no hints] are applied
+
+1. trajing JIT is enabled, hints are .green[applied], but constant folding is .red[disabled]
+
+1. tracing JIT is enabled, hints are applied, constant fonling is .green[enabled] (.blue[full optimization])
+
+1. same as 4, but trace is .red[never] invoked
+]
+
+---
+.left-column[
+## Timings of the example interpreter
+### - target
+### - condition
+]
+
+.right-column[
+- using square function
+  ```assembler
+  MOV_A_R     1   # copy of `a`
+
+  # 4:
+  MOV_R_A     0   # i--
+  DECR_A
+  MOV_A_R     0
+
+  MOV_R_A     2   # res += a
+  ADD_R_TO_A  1
+  MOV_A_R     2
+
+  MOV_R_A     0
+  JUMP_IF_A   4
+
+  MOV_R_A     2   # return res
+  RETURN_A
+  ```
+- 10000000 times repeated
+- first run is ignored: optimization are enabled after second run
+
+]
+---
+.left-column[
+## Timings of the example interpreter
+### - target
+### - condition
+### - result
+]
+
+.right-column[
+<!-- グラフを載せる -->
+]
+---
+
+.left-column[
+## Compare PyPy and CPython
+### - target
+]
+
+.right-column[
+1. PyPy compiled to C, no Jit
+
+1. PyPy compliled to C, with JIT
+
+1. CPython 2.5.2
+
+1. CPython 2.5.2 + Psyco 1.6
+]
+
+---
+
+.left-column[
+## Compare PyPy and CPython
+### - target
+### - condition
+]
+
+.right-column[
+- executing following function, f(10000000)
+
+  ```python
+  def f(a):
+      t = (1, 2, 3)
+  i=0
+  while i < a:
+          t = (t[1], t[2], t[0])
+          i += t[0]
+      return
+  ```
+]
+
+---
+.left-column[
+## Compare PyPy and CPython
+### - target
+### - condition
+### - result
+]
+
+.right-column[
+
+
+]
