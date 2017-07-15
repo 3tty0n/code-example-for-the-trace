@@ -11,7 +11,7 @@ module.exports = function(grunt) {
           base: '.',
           livereload: true,
           open: {
-            target: 'http://localhost:' + port + '/boilerplate-local.html'
+            target: 'http://localhost:' + port + '/index.html'
           },
         }
       }
@@ -25,9 +25,11 @@ module.exports = function(grunt) {
       },
       html: {
         files: [ '*.html']
-      }
+      },
+      markdown: {
+         files: [ '*.md']
+     }
     }
-
   });
 
   // Dependencies
