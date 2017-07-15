@@ -1,10 +1,9 @@
 class: center, middle, inverse
 
-# Code Example for Applying Tracing JIT to the Interpreter
+# Tracing the .red[Meta-Level]
 
 ---
-
-# A Interpreter implementation
+# Example: A Interpreter implementation
 
 --
 
