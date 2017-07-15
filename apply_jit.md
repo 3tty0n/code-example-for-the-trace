@@ -237,10 +237,10 @@ def interpret(bytecode, a):
 ]
 
 ---
-# Example for the improved interpreter
 
-## Input bytecode
+.pull-left[
 
+### Input bytecode
 Compute the square of the accumulator
 
 ```avrasm
@@ -262,3 +262,43 @@ JUMP_IF_A   4
 MOV_R_A     2   # return res
 RETURN_A
 ```
+]
+
+--
+
+.pull-right[
+
+### result
+
+```python
+loop_start(a0, regs0, bytecode0, pc0)
+# MOV_R_A 0
+opcode0 = strgetitem(bytecode0, pc0)
+pc1 = int_add(pc0, Const(1))
+guard_value(opcode0, Const(2))
+n1 = strgetitem(bytecode0, pc1)
+pc2 = int_add(pc1, Const(1))
+a1 = call(Const(<* fn list_getitem>), regs0, n1)
+# DECR_A
+opcode1 = strgetitem(bytecode0, pc2)
+pc3 = int_add(pc2, Const(1))
+guard_value(opcode1, Const(7))
+a2 = int_sub(a1, Const(1))
+[...]
+opcode5 = strgetitem(bytecode0, pc11)
+pc12 = int_add(pc11, Const(1))
+guard_value(opcode5, Const(2))
+n6 = strgetitem(bytecode0, pc12)
+pc13 = int_add(pc12, Const(1))
+a5 = call(Const(<* fn list_getitem>), regs0, n6)
+# JUMP_IF_A 4
+opcode6 = strgetitem(bytecode0, pc13)
+pc14 = int_add(pc13, Const(1))
+guard_value(opcode6, Const(3))
+target0 = strgetitem(bytecode0, pc14)
+pc15 = int_add(pc14, Const(1))
+i1 = int_is_true(a5)
+guard_true(i1)
+jump(a5, regs0, bytecode0, target0)
+```
+]
