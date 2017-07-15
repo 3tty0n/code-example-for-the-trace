@@ -1,2 +1,2 @@
 #!/bin/bash
-python -m SimpleHTTPServer $1
+python3 -m http.server $1
