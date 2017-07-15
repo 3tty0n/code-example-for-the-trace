@@ -334,7 +334,7 @@ def strange_sum(n):
 .pull-left[
 ```python
 def f(a, b):
-    if b % 46 == 41:ß
+    if b % 46 == 41:
         return a - b
     else:
         return a + b
