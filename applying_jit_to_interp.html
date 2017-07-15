@@ -122,14 +122,19 @@ class: center, middle, inverse
 
 ## A Interpreter implementation
 
+--
+
 ```python
 def interpret(bytecode, a):
-    regs = [0] * 256
-    pc = 0
+    regs = [0] * 256 # create a list of 256 ints initialized to 0
+    pc = 0 # program counter
+    ## opcode dispatch: the chain of if...elif is turned into
+    ## a switch statement by one of PyPy’s optimizations
     while True:
+        # opcode is represented by an integer value
         opcode = ord(bytecode[pc])
         pc += 1
-        if opcode == JUMP_IF_A: # opcode is
+        if opcode == JUMP_IF_A:
             target = ord(bytecode[pc])
             pc += 1
             if a:
@@ -137,19 +142,23 @@ def interpret(bytecode, a):
         elif opcode == MOV_A_R:
             n = ord(bytecode[pc])
             pc += 1
-            regs[n] = a
-        elif opcode == MOV_R_A:
-            n = ord(bytecode[pc])
-            pc += 1
-            a = regs[n]
-        elif opcode == ADD_R_TO_A:
-            n = ord(bytecode[pc])
-            pc += 1
-            a += regs[n]
+
+        [...]
+
         elif opcode == DECR_A:
             a -= 1
         elif opcode == RETURN_A:
             return a
+```
+
+---
+
+## Trace when executing the `DECR_A` opcode
+
+--
+
+```python
+
 ```
 
     </textarea>
