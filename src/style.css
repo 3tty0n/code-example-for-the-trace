@@ -6,7 +6,7 @@ h1, h2, h3 {
   font-weight: 400;
   margin-bottom: 0;
 }
-.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h1 { font-size: 2.5em; }
 .remark-slide-content h2 { font-size: 2em; }
 .remark-slide-content h3 { font-size: 1.6em; }
 .footnote {
@@ -19,7 +19,10 @@ li p {
   font-size: 24px;
 }
 .red { color: #fa0000; }
+.green { color: #008000; }
+.blue { color: #0000FF; }
 .large { font-size: 2em; }
+.semi-large { font-size: 1.5em; }
 a, a > code {
   color: rgb(249, 38, 114);
   text-decoration: none;
@@ -39,6 +42,17 @@ code {
   width: 47%;
 }
 .pull-right ~ p {
+  clear: both;
+}
+.semi-left {
+  float: left;
+  width: 68%;
+}
+.semi-right {
+  float: right;
+  width: 30%;
+}
+.semi-right ~ p {
   clear: both;
 }
 #slideshow .slide .content code {
