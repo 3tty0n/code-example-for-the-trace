@@ -302,3 +302,17 @@ guard_true(i1)
 jump(a5, regs0, bytecode0, target0)
 ```
 ]
+
+---
+
+# Improve the Result
+
+--
+
+## What points to look at?
+
+- .large[remove operations]
+- .large[constant folding immutable values]
+---
+
+# Remove operations
