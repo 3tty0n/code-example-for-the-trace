@@ -485,25 +485,6 @@ RETURN_A
 
 .left-column[
 ## Timings of the example interpreter
-### - target
-]
-
-.right-column[
-1. translated to C .red[without] including a JIT compiler
-
-1. tracing JIT is .green[enabled], but .red[no hints] are applied
-
-1. trajing JIT is enabled, hints are .green[applied], but constant folding is .red[disabled]
-
-1. tracing JIT is enabled, hints are applied, constant fonling is .green[enabled] (.blue[full optimization])
-
-1. same as 4, but trace is .red[never] invoked
-]
-
----
-.left-column[
-## Timings of the example interpreter
-### - target
 ### - condition
 ]
 
@@ -531,25 +512,49 @@ RETURN_A
 - first run is ignored: optimization are enabled after second run
 
 ]
+
+---
+
+.left-column[
+## Timings of the example interpreter
+### - condition
+### - target
+]
+
+.right-column[
+1. translated to C .red[without] including a JIT compiler
+
+1. tracing JIT is .green[enabled], but .red[no hints] are applied
+
+1. trajing JIT is enabled, hints are .green[applied], but constant folding is .red[disabled]
+
+1. tracing JIT is enabled, hints are applied, constant fonling is .green[enabled] (.blue[full optimization])
+
+1. same as 4, but trace is .red[never] invoked
+]
+
 ---
 .left-column[
 ## Timings of the example interpreter
-### - target
 ### - condition
+### - target
 ### - result
 ]
 
 .right-column[
-<!-- グラフを載せる -->
+## Result for the example intepreter computations
+
+<img src="./assets/img/benchmark1.png" width=500/>
 ]
 ---
 
 .left-column[
 ## Compare PyPy and CPython
-### - target
+### - target and condition
 ]
 
 .right-column[
+## Target
 1. PyPy compiled to C, no Jit
 
 1. PyPy compliled to C, with JIT
@@ -557,17 +562,8 @@ RETURN_A
 1. CPython 2.5.2
 
 1. CPython 2.5.2 + Psyco 1.6
-]
 
----
-
-.left-column[
-## Compare PyPy and CPython
-### - target
-### - condition
-]
-
-.right-column[
+## Condition
 - executing following function, f(10000000)
 
   ```python
@@ -584,12 +580,36 @@ RETURN_A
 ---
 .left-column[
 ## Compare PyPy and CPython
-### - target
-### - condition
+### - target and condition
 ### - result
 ]
 
 .right-column[
 
-
+## Result for the PyPy and CPython
+<img src="./assets/img/benchmark2.png" width=500 />
 ]
+
+---
+class: center, middle, inverse
+name: conclusion
+
+# Conclusion
+---
+
+## Spped up
+
+--
+
+- improving the results when applying a tracint JIT to an interpreter
+
+## Many application
+
+--
+
+- SPy-VM: a Samlltalk implementation
+- a Prolog interpreter
+- PyGirl: a Gameboy emulator
+- and so on.
+
+they are written in RPython
