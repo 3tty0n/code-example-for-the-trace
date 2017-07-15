@@ -25,6 +25,7 @@
     "uglify-js": "^2.6.1"
   },
   "scripts": {
-    "test": "node make test"
+    "test": "node make test",
+    "start": "grunt serve"
   }
 }
