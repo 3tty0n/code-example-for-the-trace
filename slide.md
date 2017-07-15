@@ -1,4 +1,4 @@
-class: center, middle
+class: center, middle, inverse
 name: title
 
 # Code Example for the Trace
