@@ -162,11 +162,6 @@ Tracing JIT techniques is built on above assumptions.
 - records a history of all the executed oprations*
 
 .footnote[.red.bold[*] name: Trace]
-
----
-class: middle, center, inverse
-
-# Code Example for the Trace
 ---
 class: center, middle, inverse
 
