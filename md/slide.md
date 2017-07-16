@@ -3,6 +3,7 @@ class: center, middle, inverse
 # Tracing the Meta-Level: PyPy's JIT compiler
 
 ## Yusuke Izawa
+### Tokyo Institute of Technology
 ### Hidehiko Masuhara lab.
 
 2017-07-21
