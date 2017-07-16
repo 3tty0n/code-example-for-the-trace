@@ -27,6 +27,6 @@
   "scripts": {
     "test": "node make test",
     "start": "grunt serve",
-    "build": "cat md/01_introduction.md md/02_tracing_jit.md md/03_tracing_the_meta_level.md md/04_evaluation.md md/05_conclution.md md/06_my_future_work.md > md/slide.md"
+    "create": "cat md/01_introduction.md md/02_tracing_jit.md md/03_tracing_the_meta_level.md md/04_evaluation.md md/05_conclution.md md/06_my_future_work.md > md/slide.md"
   }
 }
