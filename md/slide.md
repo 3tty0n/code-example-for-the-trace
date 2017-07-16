@@ -184,9 +184,9 @@ execute machine codes made at compilation phases
 
 # Devices: Gurad
 
-## Role
-
 --
+
+## Role
 
 - ensure correctness in progress
 
