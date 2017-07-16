@@ -100,7 +100,7 @@ class: center, middle, inverse
 
 - programs spend most of their runtime in loops
 
-- everal iterations of the same loop are likely to take similar code paths
+- several iterations of the same loop are likely to take similar code paths
 
 ---
 # Internal Techniques: Tracing JIT Compiler
