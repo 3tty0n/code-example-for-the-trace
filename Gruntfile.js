@@ -24,10 +24,10 @@ module.exports = function(grunt) {
         files: [ 'Gruntfile.js', 'out/remark.js', 'out/remark.min.js' ]
       },
       html: {
-        files: [ '*.html']
+        files: [ '*.html' ]
       },
       markdown: {
-         files: [ '*.md']
+          files: [ '*.md', './md/*.md' ]
      }
     }
   });
