@@ -362,9 +362,3 @@ def strange_sum(n):
 * jump(result1, n1)
 ```
 ]
-
----
-
-class: center, middle, inverse
-
-# [Back](./index.html#27)
