@@ -86,5 +86,3 @@ class: center, middle, inverse
 class: center, middle, inverse
 
 # Demo for the PyPy
-
----
