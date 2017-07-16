@@ -12,3 +12,8 @@ commit: build
 	git add .
 	git commit -m "update"
 	git push
+
+start: build
+	npm start
+
+.PHONY : build start
