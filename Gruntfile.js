@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         files: [ '*.html' ]
       },
       markdown: {
-          files: [ '*.md', './md/*.md' ]
+          files: [ './md/*.md' ]
      }
     }
   });
