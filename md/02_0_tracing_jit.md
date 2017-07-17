@@ -6,6 +6,8 @@ class: center, middle, inverse
 
 # Background: Assumptions of Tracing JIT Compiler
 
+Tracing JIT techniques are built on following assumptions.
+
 --
 ## Assumptions
 
@@ -15,8 +17,6 @@ class: center, middle, inverse
 
 ---
 # Internal Techniques: Tracing JIT Compiler
-
-Tracing JIT techniques is built on above assumptions.
 
 --
 

@@ -81,7 +81,10 @@ class: center, middle, inverse
 
 ## Solve the speed promblem
 
-- Get better the performance with Tracing JIT compiler
+- Get better the performance with Tracing JIT compiler*
+
+.footnote[.red.bold[*] Main point in this seminar]
+
 
 ---
 class: center, middle, inverse
@@ -95,6 +98,8 @@ class: center, middle, inverse
 
 # Background: Assumptions of Tracing JIT Compiler
 
+Tracing JIT techniques are built on following assumptions.
+
 --
 ## Assumptions
 
@@ -104,8 +109,6 @@ class: center, middle, inverse
 
 ---
 # Internal Techniques: Tracing JIT Compiler
-
-Tracing JIT techniques is built on above assumptions.
 
 --
 

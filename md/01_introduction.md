@@ -81,7 +81,10 @@ class: center, middle, inverse
 
 ## Solve the speed promblem
 
-- Get better the performance with Tracing JIT compiler
+- Get better the performance with Tracing JIT compiler*
+
+.footnote[.red.bold[*] Main point in this seminar]
+
 
 ---
 class: center, middle, inverse
