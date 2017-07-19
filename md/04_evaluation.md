@@ -50,15 +50,14 @@ class: center, middle, inverse
 ]
 
 .right-column[
-1. translated to C .red[without] including a JIT compiler
 
-1. tracing JIT is .green[enabled], but .red[no hints] are applied
-
-1. trajing JIT is enabled, hints are .green[applied], but constant folding is .red[disabled]
-
-1. tracing JIT is enabled, hints are applied, constant fonling is .green[enabled] (.blue[full optimization])
-
-1. same as 4, but trace is .red[never] invoked
+|     | JIT  |  hints | constant-folding | trace overhead |
+|:----|:----:|:------:|:----------------:|---------------:|
+|  1  |  ☓   | ☓      |       ☓          |        ☓       |
+|  2  |  ○   | ☓      |       ☓          |        ☓       |
+|  3  |  ○   | ○      |       ☓          |        ☓       |
+|  4  |  ○   | ○      |       ○          |        ○       |
+|  5  |  ○   | ○      |       ○          |        ○       |
 ]
 
 ---
