@@ -32,6 +32,16 @@ class: center, middle, inverse
 
 ---
 
+# Introduction: About the paper
+
+- Tracing the Meta-Level: PyPy’s Tracing JIT Compiler
+
+  - Carl Friedrich Bolz, Antonio Cuni, Maciej Fijalkowski, Armin Rigo
+
+  - ICOOOLPS ‘09
+
+---
+
 # Introduction: Speed on Run-Time
 
 --
@@ -76,7 +86,7 @@ class: center, middle, inverse
 - Aim to be the __environment__ for writing _flexible implementations_ of dynamic languages
 
 ---
-
+class: middle, center, inverse
 # Demo for the PyPy
 ---
 class: center, middle, inverse
