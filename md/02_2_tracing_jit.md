@@ -4,6 +4,8 @@
 
 - turn a trace into efficient machine code
 
+--
+  
 ## generated machine code
 
 - immediately execuatble
@@ -14,7 +16,9 @@
 
 # Phases: Running (code execution)
 
-execute machine codes made at compilation phases
+- execute machine codes made at compilation phases
+
+--
 
 ## Guard:
 

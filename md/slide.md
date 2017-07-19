@@ -578,6 +578,8 @@ Jump to the begging of the loop.
 
 - turn a trace into efficient machine code
 
+--
+  
 ## generated machine code
 
 - immediately execuatble
@@ -588,7 +590,9 @@ Jump to the begging of the loop.
 
 # Phases: Running (code execution)
 
-execute machine codes made at compilation phases
+- execute machine codes made at compilation phases
+
+--
 
 ## Guard:
 
