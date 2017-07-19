@@ -16,28 +16,25 @@ Tracing JIT techniques are built on following assumptions.
 - several iterations of the same loop are likely to take similar code paths
 
 ---
-# Internal Techniques: Tracing JIT Compiler
+# Overview: Tracing JIT Compiler
 
 --
 
+.pull-left[
 ## Phases
 - Interpretation / Profiling
+
 - Tracing
-- Compilation
-- Running
 
---
+- Code generation
 
-## Devises
+- Code execution
 
-- Guards
+## Techniques for Tracing
+
+- Gurad
+
 - Position key
-
----
-
-# Overview: Tracing JIT Compiler
-.center[
-<img src="./assets/img/tracingjit_diagram.png" height=500/>
 ]
 
 ---
@@ -61,16 +58,59 @@ Tracing JIT techniques are built on following assumptions.
 
 - when .red[Hot Loop] is identified
 
---
-
-## Subject doing tracing
-
-- Tracer
+  - _Tracing mode_
 
 --
 
 ## During
 
-- records a history of all the executed oprations*
+- records a history of all the executed oprations*, one iteration of the hot loop
 
 .footnote[.red.bold[*] name: Trace]
+
+---
+
+# Techniques: Gurad
+
+## Role
+
+- ensure correctness in progress
+
+- a guard failing, *fall back to* **interpretation phase**
+
+--
+
+## Usecase
+
+- places guard at every possible point where the path could go another direction
+
+---
+
+# Techniques: Position Key
+
+## Role
+
+- recognizes the corresponding loop for a trace
+
+- describes the position of the execution of the program
+
+ - have executed functions and program counter
+
+???
+
+- Position Key の役割は trace における loop がどうなっているかという状態を認識すること
+- 実行されるプログラムの position （位置）を把握
+ - 位置とは今何ステップ目なのか、といったもの
+- 実行された関数やプログラムカウンターをもっている
+
+--
+
+## Usecase
+- check position key at backward branch instruction*
+
+.footnote[.red.bold[*] to check the loop is closed]
+
+???
+
+- usecase としてはバックワードジャンプ（前方への命令へジャンプすること）がないか調べること
+- これでループが閉じているか判断する

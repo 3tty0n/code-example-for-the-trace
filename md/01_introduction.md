@@ -11,8 +11,7 @@ class: center, middle, inverse
 class: middlle
 # Overview
 
---
-1. introduce the paper
+1. Introduce "Tracing the Meta-Level: PyPy's JIT compiler"
 
   1. Introduction
 
@@ -41,15 +40,19 @@ class: center, middle, inverse
 
 - .red[Slow]: Dynamic Languages
 
---
-
-##### Example benchmark: Mandelbrot description
+##### Example benchmark:  [Drawing Mandelbrot](http://benchmarksgame.alioth.debian.org/u64q/mandelbrot.html)
 
 .center[
-<img src="./assets/img/speed.png" width=500/>
+<img src="./assets/img/speed.png" width=400/>
 ]
 
-.footnote[http://benchmarksgame.alioth.debian.org/u64q/mandelbrot.html]
+--
+
+## PyPy: Solve the speed promblem
+
+- Get better the performance with Tracing JIT compiler *
+
+<sup>.red.bold[*] Main point in this seminar</sup>
 
 ---
 
@@ -60,33 +63,18 @@ class: center, middle, inverse
 --
 - .green[Easy]: interpreter
 
-  - straightforward
+  - straightforward techniques
 
---
 - .red[Hard]: just-in-time compiler
 
   - complicated techniques
 
----
-
-# Introduction: What is PyPy?
-
 --
 
-## Solve the implementation problem
+## PyPy: Solve the implementation problem
 
 - Aim to be the __environment__ for writing _flexible implementations_ of dynamic languages
 
---
-
-## Solve the speed promblem
-
-- Get better the performance with Tracing JIT compiler*
-
-.footnote[.red.bold[*] Main point in this seminar]
-
-
 ---
-class: center, middle, inverse
 
 # Demo for the PyPy

@@ -1,15 +1,7 @@
 ---
+class: center, middle, inverse
+
 # Evaluation
-
---
-
-## hardware
-- 1.4 GHz Pentium M processor
-- 1 GB RAM
-- Linux 2.6.27
-
-## Trying number
-- all benchmarks are repeated 50 times
 
 ---
 

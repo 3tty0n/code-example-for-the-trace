@@ -55,24 +55,32 @@ jump(a1, regs0, bytecode0, pc1)
 ---
 # Evaluation of previous example
 
---
-
 ## Problem:
 
-.center[useful _only when_ executing a long series of `DECR_A` opcodes.]
+useful _only when_ executing a long series of `DECR_A` opcodes.
 
 --
 
 ## Solution:
 
-.center[do not trace the single opcode, but a **series of several opcodes**.]
+do not trace the single opcode, but a **series of several opcodes**
 
+<u>by unrolling the bytecode dispatch loop</u>
+
+--
+
+## Unrolling the bytecode dispatch loop
+
+trace the opcodes the interpreter executed
+
+
+???
+
+bytecode dispatch loop を展開することによってインタプリタ全体をトレースします
 
 ---
 
 # Improved Implementation
-
---
 
 ```python
 tlrjitdriver = JitDriver(greens = [’pc’, ’bytecode’],
@@ -134,8 +142,6 @@ def interpret(bytecode, a):
 
 # Improved point
 
---
-
 ## Adding hints
 
 - `JitDriver(greends = [...], reds = [...])`
@@ -146,15 +152,13 @@ def interpret(bytecode, a):
 
 --
 
-## Why
+## In order to
 
-to use when doing profiling to decide when to start tracing
+use when doing profiling to decide when to start tracing
 
 ---
 
 # Hint: JitDriver
-
---
 
 ## greens
 
@@ -326,8 +330,6 @@ jump(a5, regs0, bytecode0, target0)
 
 # Improve the Result
 
---
-
 ## What points to look at?
 
 - remove operations
@@ -371,8 +373,6 @@ a1 = call(Const(<* fn list_getitem>), regs0, n1)
 
 # Constant folding immutable values
 
---
-
 ## Example
 
 
@@ -400,8 +400,6 @@ guard_value(opcode0, Const(2))
 ---
 
 # Optimized Result
-
---
 
 .semi-left[
 ```python
@@ -463,19 +461,3 @@ RETURN_A
 - 命令の列が以前より大幅に減りました。これによって命令の数が減るので、以前のものより実行速度が早くなると考えられます
 - このトレースは非常に元のバイトコードに、ユーザーのプログラムに似ていませんか？
 - これは偶然ではなく、最適化の過程で無駄な計算の枝葉を取っていったので、なるべくしてなったのです
-
----
-class: middle, center
-
-# Tracing the Meta-Level:
-
---
-not trace directly the user program,
-
-but we trace the interpreter while executing the user program
-
-
-???
-
-つまり、tracing the mta-level というのは、 user program を直接トレースするのではなく、
-interpreter が実行した user program をトレースするということなのです

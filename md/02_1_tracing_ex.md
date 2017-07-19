@@ -73,6 +73,9 @@ i2 = int_ge(n1, Const(0))
 guard_true(i2)
 jump(result1, n1)
 ```
+
+When a loop (like `while`, `for`) is finded, the tracing JIT will start to trace.
+
 ]
 
 ---
@@ -109,6 +112,9 @@ i2 = int_ge(n1, Const(0))
 guard_true(i2)
 jump(result1, n1)
 ```
+
+Inline expansion
+
 ]
 
 ---
@@ -181,7 +187,11 @@ i2 = int_ge(n1, Const(0))
 guard_true(i2)
 jump(result1, n1)
 ```
+
+Places a gurad.
+
 ]
+
 
 ---
 
@@ -325,6 +335,8 @@ i2 = int_ge(n1, Const(0))
 *guard_true(i2)
 jump(result1, n1)
 ```
+
+Places a guard.
 ]
 
 ---
@@ -361,4 +373,6 @@ i2 = int_ge(n1, Const(0))
 guard_true(i2)
 *jump(result1, n1)
 ```
+
+Jump to the begging of the loop.
 ]

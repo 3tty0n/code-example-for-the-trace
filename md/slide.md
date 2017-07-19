@@ -11,8 +11,7 @@ class: center, middle, inverse
 class: middlle
 # Overview
 
---
-1. introduce the paper
+1. Introduce "Tracing the Meta-Level: PyPy's JIT compiler"
 
   1. Introduction
 
@@ -41,15 +40,19 @@ class: center, middle, inverse
 
 - .red[Slow]: Dynamic Languages
 
---
-
-##### Example benchmark: Mandelbrot description
+##### Example benchmark:  [Drawing Mandelbrot](http://benchmarksgame.alioth.debian.org/u64q/mandelbrot.html)
 
 .center[
-<img src="./assets/img/speed.png" width=500/>
+<img src="./assets/img/speed.png" width=400/>
 ]
 
-.footnote[http://benchmarksgame.alioth.debian.org/u64q/mandelbrot.html]
+--
+
+## PyPy: Solve the speed promblem
+
+- Get better the performance with Tracing JIT compiler *
+
+<sup>.red.bold[*] Main point in this seminar</sup>
 
 ---
 
@@ -60,34 +63,19 @@ class: center, middle, inverse
 --
 - .green[Easy]: interpreter
 
-  - straightforward
+  - straightforward techniques
 
---
 - .red[Hard]: just-in-time compiler
 
   - complicated techniques
 
----
-
-# Introduction: What is PyPy?
-
 --
 
-## Solve the implementation problem
+## PyPy: Solve the implementation problem
 
 - Aim to be the __environment__ for writing _flexible implementations_ of dynamic languages
 
---
-
-## Solve the speed promblem
-
-- Get better the performance with Tracing JIT compiler*
-
-.footnote[.red.bold[*] Main point in this seminar]
-
-
 ---
-class: center, middle, inverse
 
 # Demo for the PyPy
 ---
@@ -108,28 +96,25 @@ Tracing JIT techniques are built on following assumptions.
 - several iterations of the same loop are likely to take similar code paths
 
 ---
-# Internal Techniques: Tracing JIT Compiler
+# Overview: Tracing JIT Compiler
 
 --
 
+.pull-left[
 ## Phases
 - Interpretation / Profiling
+
 - Tracing
-- Compilation
-- Running
 
---
+- Code generation
 
-## Devises
+- Code execution
 
-- Guards
+## Techniques for Tracing
+
+- Gurad
+
 - Position key
-
----
-
-# Overview: Tracing JIT Compiler
-.center[
-<img src="./assets/img/tracingjit_diagram.png" height=500/>
 ]
 
 ---
@@ -153,19 +138,62 @@ Tracing JIT techniques are built on following assumptions.
 
 - when .red[Hot Loop] is identified
 
---
-
-## Subject doing tracing
-
-- Tracer
+  - _Tracing mode_
 
 --
 
 ## During
 
-- records a history of all the executed oprations*
+- records a history of all the executed oprations*, one iteration of the hot loop
 
 .footnote[.red.bold[*] name: Trace]
+
+---
+
+# Techniques: Gurad
+
+## Role
+
+- ensure correctness in progress
+
+- a guard failing, *fall back to* **interpretation phase**
+
+--
+
+## Usecase
+
+- places guard at every possible point where the path could go another direction
+
+---
+
+# Techniques: Position Key
+
+## Role
+
+- recognizes the corresponding loop for a trace
+
+- describes the position of the execution of the program
+
+ - have executed functions and program counter
+
+???
+
+- Position Key の役割は trace における loop がどうなっているかという状態を認識すること
+- 実行されるプログラムの position （位置）を把握
+ - 位置とは今何ステップ目なのか、といったもの
+- 実行された関数やプログラムカウンターをもっている
+
+--
+
+## Usecase
+- check position key at backward branch instruction*
+
+.footnote[.red.bold[*] to check the loop is closed]
+
+???
+
+- usecase としてはバックワードジャンプ（前方への命令へジャンプすること）がないか調べること
+- これでループが閉じているか判断する
 ---
 class: center, middle, inverse
 
@@ -241,6 +269,9 @@ i2 = int_ge(n1, Const(0))
 guard_true(i2)
 jump(result1, n1)
 ```
+
+When a loop (like `while`, `for`) is finded, the tracing JIT will start to trace.
+
 ]
 
 ---
@@ -277,6 +308,9 @@ i2 = int_ge(n1, Const(0))
 guard_true(i2)
 jump(result1, n1)
 ```
+
+Inline expansion
+
 ]
 
 ---
@@ -349,7 +383,11 @@ i2 = int_ge(n1, Const(0))
 guard_true(i2)
 jump(result1, n1)
 ```
+
+Places a gurad.
+
 ]
+
 
 ---
 
@@ -493,6 +531,8 @@ i2 = int_ge(n1, Const(0))
 *guard_true(i2)
 jump(result1, n1)
 ```
+
+Places a guard.
 ]
 
 ---
@@ -529,12 +569,20 @@ i2 = int_ge(n1, Const(0))
 guard_true(i2)
 *jump(result1, n1)
 ```
+
+Jump to the begging of the loop.
 ]
 ---
 
 # Phases: Compilation (code generation)
 
-generate efficient machine code using a trace
+- turn a trace into efficient machine code
+
+## generated machine code
+
+- immediately execuatble
+
+  - uses in the next iteration loop
 
 ---
 
@@ -542,56 +590,11 @@ generate efficient machine code using a trace
 
 execute machine codes made at compilation phases
 
----
+## Guard:
 
-# Devices: Gurad
+  - **quick checker** guaranteeing that the path we are execution is **still valid**
 
---
-
-## Role
-
-- ensure correctness in progress
-
-- a guard failing, *fall back to* **interpretation phase**
-
---
-
-## Usecase
-
-- places guard at every possible point where the path could go another direction
-
----
-
-# Devices: Position Key
-
---
-
-## Role
-
-- recognizes the corresponding loop for a trace
-
-- describes the position of the execution of the program
-
-  - have executed functions and program counter
-
-???
-
-- Position Key の役割は trace における loop がどうなっているかという状態を認識すること
-- 実行されるプログラムの position （位置）を把握
-  - 位置とは今何ステップ目なのか、といったもの
-- 実行された関数やプログラムカウンターをもっている
-
---
-
-## Usecase
-- check position key at backward branch instruction*
-
-.footnote[.red.bold[*] to check the loop is closed]
-
-???
-
-- usecase としてはバックワードジャンプ（前方への命令へジャンプすること）がないか調べること
-- これでループが閉じているか判断する
+  - If guard fails, fall back to _interpretation_
 ---
 class: center, middle, inverse
 
@@ -649,24 +652,32 @@ jump(a1, regs0, bytecode0, pc1)
 ---
 # Evaluation of previous example
 
---
-
 ## Problem:
 
-.center[useful _only when_ executing a long series of `DECR_A` opcodes.]
+useful _only when_ executing a long series of `DECR_A` opcodes.
 
 --
 
 ## Solution:
 
-.center[do not trace the single opcode, but a **series of several opcodes**.]
+do not trace the single opcode, but a **series of several opcodes**
 
+<u>by unrolling the bytecode dispatch loop</u>
+
+--
+
+## Unrolling the bytecode dispatch loop
+
+trace the opcodes the interpreter executed
+
+
+???
+
+bytecode dispatch loop を展開することによってインタプリタ全体をトレースします
 
 ---
 
 # Improved Implementation
-
---
 
 ```python
 tlrjitdriver = JitDriver(greens = [’pc’, ’bytecode’],
@@ -728,8 +739,6 @@ def interpret(bytecode, a):
 
 # Improved point
 
---
-
 ## Adding hints
 
 - `JitDriver(greends = [...], reds = [...])`
@@ -740,15 +749,13 @@ def interpret(bytecode, a):
 
 --
 
-## Why
+## In order to
 
-to use when doing profiling to decide when to start tracing
+use when doing profiling to decide when to start tracing
 
 ---
 
 # Hint: JitDriver
-
---
 
 ## greens
 
@@ -920,8 +927,6 @@ jump(a5, regs0, bytecode0, target0)
 
 # Improve the Result
 
---
-
 ## What points to look at?
 
 - remove operations
@@ -965,8 +970,6 @@ a1 = call(Const(<* fn list_getitem>), regs0, n1)
 
 # Constant folding immutable values
 
---
-
 ## Example
 
 
@@ -994,8 +997,6 @@ guard_value(opcode0, Const(2))
 ---
 
 # Optimized Result
-
---
 
 .semi-left[
 ```python
@@ -1057,34 +1058,10 @@ RETURN_A
 - 命令の列が以前より大幅に減りました。これによって命令の数が減るので、以前のものより実行速度が早くなると考えられます
 - このトレースは非常に元のバイトコードに、ユーザーのプログラムに似ていませんか？
 - これは偶然ではなく、最適化の過程で無駄な計算の枝葉を取っていったので、なるべくしてなったのです
-
 ---
-class: middle, center
+class: center, middle, inverse
 
-# Tracing the Meta-Level:
-
---
-not trace directly the user program,
-
-but we trace the interpreter while executing the user program
-
-
-???
-
-つまり、tracing the mta-level というのは、 user program を直接トレースするのではなく、
-interpreter が実行した user program をトレースするということなのです
----
 # Evaluation
-
---
-
-## hardware
-- 1.4 GHz Pentium M processor
-- 1 GB RAM
-- Linux 2.6.27
-
-## Trying number
-- all benchmarks are repeated 50 times
 
 ---
 
@@ -1231,3 +1208,25 @@ they are written in RPython*
 class: center, middle, inverse
 
 # My Future Work
+
+---
+## What I want to do
+
+Create a new hybrid compiler, tracing JIT and method JIT*
+
+--
+
+## What I should do
+
+- unserstand the PyPy's JIT
+
+- create simple semantics and implement it
+
+- rebuild the RPython**
+
+.footnote[
+
+.red.bold[*] JIT in Java
+
+.red.bold[**] a Subset of Python
+]
