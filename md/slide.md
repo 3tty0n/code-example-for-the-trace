@@ -1147,13 +1147,13 @@ class: center, middle, inverse
 
 .right-column[
 
-|     | JIT  |  hints | constant-folding | trace overhead |
-|:----|:----:|:------:|:----------------:|---------------:|
-|  1  |  ☓   | ☓      |       ☓          |        ☓       |
-|  2  |  ○   | ☓      |       ☓          |        ☓       |
-|  3  |  ○   | ○      |       ☓          |        ☓       |
-|  4  |  ○   | ○      |       ○          |        ○       |
-|  5  |  ○   | ○      |       ○          |        ○       |
+## Example interpreters
+
+<a href="https://gyazo.com/8e40a63619b062fdcf1855b4364af4f5">
+  <img src="https://i.gyazo.com/8e40a63619b062fdcf1855b4364af4f5.png"
+       alt="https://gyazo.com/8e40a63619b062fdcf1855b4364af4f5"
+       width="500"/>
+</a>
 ]
 
 ---
