@@ -198,13 +198,9 @@ needs to be called at the end of any instruction that __program counter__ to an 
 ## In order to
 
 
-- to check for a __closing loop__
+- check for a __closing loop__
 
 - JIT can detect the backward jump
-
---
-
-## Because
 
 - if it is closing loop, program counter (`green`) variables are the same several times
 

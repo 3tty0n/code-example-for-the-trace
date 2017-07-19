@@ -15,7 +15,7 @@ class: middlle
 
   1. Introduction
 
-  1. Tracing JIT Compiler
+  1. PyPy's Tracing JIT Compiler
 
   1. Tracing the Meta-Level
 
@@ -29,6 +29,26 @@ class: middlle
 class: center, middle, inverse
 
 # Introduction
+
+---
+
+# Introduction: What is PyPy?
+
+## Compatibility
+
+- highliy compatibility with CPython
+
+## Environment
+
+- writing flexible implementations of dynamic languages
+
+  - enable developers to try experimental implementations
+
+## RPython
+
+- implementations are written in RPython
+
+  - subset of Python that allows type inference
 
 ---
 
@@ -66,28 +86,34 @@ class: center, middle, inverse
 
 ---
 
-# Introduction: Interpreter and Just-In-Time Compiler
+# Introduction: Interpreter and JIT
+
+--
 
 ## Implementation
 
---
-- .green[Easy]: interpreter
+- .green[Easy]: interpreter for dynamic languages
 
-  - straightforward techniques
+  - straightforward, without advanced techniques like JIT
 
-- .red[Hard]: just-in-time compiler
+- .red[Hard]: just-in-time compiler for dynamic languages
 
-  - complicated techniques
+  - advanced, but complicated techniques
 
 --
 
 ## PyPy: Solve the implementation problem
 
-- Aim to be the __environment__ for writing _flexible implementations_ of dynamic languages
+- ease the implementation of dynamic languages
 
----
+  - with advanced techniques
+
+- writing tracing JIT
+
+<!-- ---
 class: middle, center, inverse
 # Demo for the PyPy
+-->
 ---
 class: center, middle, inverse
 
@@ -809,13 +835,9 @@ needs to be called at the end of any instruction that __program counter__ to an 
 ## In order to
 
 
-- to check for a __closing loop__
+- check for a __closing loop__
 
 - JIT can detect the backward jump
-
---
-
-## Because
 
 - if it is closing loop, program counter (`green`) variables are the same several times
 
