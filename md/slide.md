@@ -37,18 +37,25 @@ class: center, middle, inverse
 ## Compatibility
 
 - highliy compatibility with CPython
+  - http://pypy.org/compat.html
 
 ## Environment
 
 - writing flexible implementations of dynamic languages
 
-  - enable developers to try experimental implementations
+  - implement othe languages using __RPython__
+    - [Smalltalk](https://bitbucket.org/pypy/lang-smalltalk/), [JavaScript](https://bitbucket.org/pypy/lang-js/), [Scheme](https://bitbucket.org/pypy/lang-scheme/), etc..
 
 ## RPython
 
-- implementations are written in RPython
+- _subset_ of Python that allows type inference
+  - PyPy is written in RPython
 
-  - subset of Python that allows type inference
+
+---
+class: middle, center, inverce
+
+# DEMO for the PyPy
 
 ---
 
